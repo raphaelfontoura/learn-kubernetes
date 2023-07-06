@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+  name: portal-configmap
+data:
+  # Windows -> localhost, Linux -> kubectl get nodes -o wide
+  IP_SISTEMA: http://192.168.49.2:30001
