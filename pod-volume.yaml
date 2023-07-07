@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod 
+metadata:
+  name: pod-volume
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx:latest
+      volumeMounts:
+        - mountPath: /volume-dentro-do-container
+          # name: primeiro-volume
+          name: segundo-volume
+    - name: jenkins-container
+      image: jenkins:alpine
+      volumeMounts:
+        - mountPath: /volume-dentro-do-container
+          # name: primeiro-volume
+          name: segundo-volume
+  volumes:
+    # - name: primeiro-volume
+    #   hostPath:
+    #     path: /home/primeiro-volume
+    #     type: Directory
+    - name: segundo-volume
+      hostPath:
+        path: /home/segundo-volume
+        type: DirectoryOrCreate
+
+
+## No caso de type: Directory veja comentários abaixo:
+## Para o linux com minikube é necessário criar o diretório no minikube
+## Acesse o minikube com o comando >> $ minikube ssh
+## navegue até a pasta home e crie o diretório primeiro-volume >> $ sudo mkdir primeiro-volume

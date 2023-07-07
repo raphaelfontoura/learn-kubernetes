@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-pod
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:stable
+          ports:
+            - containerPort: 80
+  selector:
+    matchLabels:
+      app: nginx-pod
+
+# Vantagens de deployments x replicaset
+# 1- controle de versão
+# kubectl rollout history deployment nginx-deployment
+# Ao alterar a versão da imagem do container:
+# kubectl apply -f nginx-deployment.yaml --record
+# Pode anotar os deployments como no comando abaixo:
+# kubectl annotate deployment nginx-deployment kubernetes.io/change-cause="Imagem atualizada para versao latest"
+# É possível voltar para uma versão do deployment
+# kubectl rollout undo deployment nginx-deployment --to-revision=2
